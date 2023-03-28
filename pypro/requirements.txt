@@ -1,5 +1,0 @@
-Django
-pylint
-autopep8
-whitenoise
-psycopg2-binary
