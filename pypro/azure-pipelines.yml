@@ -1,18 +1,25 @@
-jobs:
-- job: 'Test'
-  pool:
-    vmImage: 'ubuntu-latest' # other options: 'macOS-latest', 'windows-latest'
-  strategy:
+trigger:
+- master
+- dev
+- refs/tags/*
+
+pr:
+- master
+- dev
+
+pool:
+  vmImage: 'ubuntu-latest'
+strategy:
+  matrix:
+    Python38:
+      python.version: '3.11.2
 
 steps:
 - task: UsePythonVersion@0
   inputs:
-    versionSpec: '3.11.2'
+    versionSpec: '$(python.version)'
+  displayName: 'Prepare Python $(python.version)'
 - script: pip install pipenv
   displayName: 'Install pipenv'
-- script: pipenv install 
-  displayName: 'create environment'
-- script: pipenv sync
-  displayName: 'pipenv sync'
-- script: pipenv sync -d
-  displayName: 'pipenv sync -d'
+- script: python -m pipenv install --dev
+  displayName: 'Install dependencies'
