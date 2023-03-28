@@ -1,0 +1,18 @@
+jobs:
+- job: 'Test'
+  pool:
+    vmImage: 'ubuntu-latest' # other options: 'macOS-latest', 'windows-latest'
+  strategy:
+
+steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.11.2'
+- script: pip install pipenv
+  displayName: 'Install pipenv'
+- script: pipenv install 
+  displayName: 'create environment'
+- script: pipenv sync
+  displayName: 'pipenv sync'
+- script: pipenv sync -d
+  displayName: 'pipenv sync -d'
